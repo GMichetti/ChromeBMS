@@ -1,0 +1,2 @@
+aiohttp==3.9.5
+pyppeteer==2.0.0
