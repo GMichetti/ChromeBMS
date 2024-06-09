@@ -8,14 +8,6 @@ os.environ["PYPPETEER_CHROMIUM_REVISION"] = PYPPETEER_CHROMIUM_REVISION
 from pyppeteer import launch
 
 
-CWD = os.getcwd()
-USER = os.getlogin()
-DEFAULT_PDF_FOLDER = "C:\\chromebookmark"
-BOOKMARK_PATH = (
-    f"C:\\Users\\{USER}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks"
-)
-
-
 def sanitize_filename(filename):
 
     invalid_chars = r'[<>:"/\\|?*]'
@@ -30,20 +22,24 @@ async def download_webpage_as_pdf(site):
         os.makedirs(folder_path)
     site_name_fixed = sanitize_filename(site["name"])
     pdf_path = f"{folder_path}\\{site_name_fixed}.pdf"
+
     try:
 
         browser = await launch()
-        # if you get a configuration error from the launch() function you can download chromium
+        
+        # if you get a configuration error from the launch() function you can
+        # download chromium for windows (chrome-win.zip)
         # from the following address:
-        # 
+        #
         # https://commondatastorage.googleapis.com/chromium-browser-snapshots/index.html?prefix=Win_x64/1000027/
         # and copy it manually into the folder indicated by executablePath,
         # in the code below:
-        # 
+        #
         # --------------------------------------------------------------
         # current_directory = os.path.dirname(os.path.abspath(__file__))
         # browser = await launch(
-        #     executablePath=f"{current_directory}\\chrome-win\\chrome")
+        #     executablePath=f"{current_directory}\\chrome-win\\chrome"
+        # )
         # --------------------------------------------------------------
 
         page = await browser.newPage()
@@ -52,15 +48,14 @@ async def download_webpage_as_pdf(site):
         await browser.close()
 
     except Exception as err:
-        print(err)
+        print(f"exception for: {site_name_fixed}, err: {err}")
 
 
 async def download_webpage_list(my_sites):
 
     coroutine = [download_webpage_as_pdf(site) for site in my_sites]
     tasks = asyncio.gather(*coroutine)
-    results = await tasks
-    return results
+    await tasks
 
 
 def building_tree_DS(root):
@@ -93,6 +88,12 @@ def building_tree_DS(root):
 
 
 if __name__ == "__main__":
+
+    CWD = os.getcwd()
+    ROOT = CWD.split("\\")[0]
+    USER = os.getlogin()
+    DEFAULT_PDF_FOLDER = f"{ROOT}\\chromebookmark"
+    BOOKMARK_PATH = f"{ROOT}\\Users\\{USER}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks"
 
     levelCompletion = {}
     buildingFolderPath = []
