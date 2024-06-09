@@ -17,7 +17,7 @@ def sanitize_filename(filename):
 
 async def download_webpage_as_pdf(site):
 
-    folder_path = f"{DEFAULT_PDF_FOLDER}\\{site['folder']}"
+    folder_path = f"{DEFAULT_PDF_PATH}\\{site['folder']}"
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     site_name_fixed = sanitize_filename(site["name"])
@@ -92,7 +92,8 @@ if __name__ == "__main__":
     CWD = os.getcwd()
     ROOT = CWD.split("\\")[0]
     USER = os.getlogin()
-    DEFAULT_PDF_FOLDER = f"{ROOT}\\chromebookmark"
+    PDF_FOLDER = "chromebookmark"
+    DEFAULT_PDF_PATH = f"{ROOT}\\{PDF_FOLDER}"
     BOOKMARK_PATH = f"{ROOT}\\Users\\{USER}\\AppData\\Local\\Google\\Chrome\\User Data\\Default\\Bookmarks"
 
     levelCompletion = {}
