@@ -2,7 +2,7 @@
 
 ## Description
 
-This is a Python utility that reads your Chrome bookmarks and saves them locally as PDF files. The project is designed to be simple and efficient, leveraging the power of `pyppeteer` to generate PDFs from your bookmarks.
+This is a Python utility for that reads your Chrome bookmarks and saves them locally as PDF files. The project is designed to be simple and efficient, leveraging the power of `pyppeteer` to generate PDFs from your bookmarks.
 
 ## Features
 
@@ -12,8 +12,10 @@ This is a Python utility that reads your Chrome bookmarks and saves them locally
 
 ## Requirements
 
-- Python 3.6 or higher
+- Windows OS
 - Google Chrome browser
+- Python 3.6 or higher
+
 
 ## Installation
 
